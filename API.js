@@ -312,3 +312,13 @@ app.get('/calculate-age/:birth_year', async(req, res) =>{
     }
 
 });
+
+
+/*
+Criar um service para conetar ao banco de dados MYSQL
+Criar um CRUD ( POST, GET, DELETE, PUT ) de USUARIO (id, nome, data_criacao)
+Criar um CRUD de IMAGEM ( id, referencia, data_criacao, titulo)
+*/
+
+
+
