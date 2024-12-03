@@ -1,4 +1,4 @@
-const mysql = require('mysql2');
+
 const express = require ('express')
 const axios = require ('axios')
 const app = express();
@@ -12,26 +12,6 @@ app.listen(PORT, () => {
 
 
 app.use(express.json()); // Middleware para aceitar JSON
-
-// Conexão com o banco de dados
-const db = mysql.createConnection({
-    
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'iagodb'
-});
-
-
-
-
-db.connect((err) => {
-    if (err) {
-        console.error('Erro de conexão ao DB:', err);
-        return;
-    }
-    console.log('Conexão ao DB estabelecida.');
-});
 
 
 
