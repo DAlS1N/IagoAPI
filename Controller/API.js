@@ -4,6 +4,17 @@ const axios = require ('axios')
 const app = express();
 const PORT = 3000;
 
+/*
+
+Controller -> http.get,Post...
+Models -> Entidades
+Service -> Regra de Negocio
+Routes - Rotas
+Repository -> BD - SELECT
+
+*/
+
+
 
 
 /*
