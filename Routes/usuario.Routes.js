@@ -1,4 +1,4 @@
-const db = require('../database/db');
+const db = require('../Repository/db');
 
 class UsuarioRepository {
     static async create(nome) {
