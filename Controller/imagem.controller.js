@@ -15,7 +15,7 @@ app.use(express.json()); // Middleware para aceitar JSON
 
 
 
-app.post('/Imagens', async(req, res) =>{
+exports.cadastroImagens = async(req, res) =>{
     try{
         const { referencia } = req.body;
         const { titulo } = req.body;
@@ -27,11 +27,11 @@ app.post('/Imagens', async(req, res) =>{
     } catch(error){
         res.status(500).json({ message: 'Erro ao inserir a Imagem.'});
     }
-});
+};
 
 
 
-app.get('/Imagens/achar/:id', async(req, res) =>{
+exports.encontrarImagem = async(req, res) =>{
     try{
         const { id } = req.params;
         const imagem = await ImagemsRepositor.findById(id);
@@ -45,11 +45,11 @@ app.get('/Imagens/achar/:id', async(req, res) =>{
         
         res.status(500).json({ message: 'Erro ao achar a Imagem.'});
     }
-});
+};
 
 
 
-app.put('/Imagens/atualizar/:id', async (req, res) => {
+exports.atulizarImagem = async (req, res) => {
     try{
     const { id } = req.params;
     const { referencia, titulo } = req.body;
@@ -69,12 +69,12 @@ app.put('/Imagens/atualizar/:id', async (req, res) => {
 
     }
  
-});
+};
 
 
 
 
-app.delete('/Imagens/deletar/:id', async(req, res) =>{
+exports.deletarImagem = async(req, res) =>{
     try{
         const { id } = req.params; 
         const ImagemDelet = await ImagemsRepositor.delete(id);
@@ -89,4 +89,4 @@ app.delete('/Imagens/deletar/:id', async(req, res) =>{
             res.status(500).json({message: 'Erro ao deletar o usuário.'})
         }
 
-});
+};

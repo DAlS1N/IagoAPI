@@ -1,7 +1,7 @@
 
 const express = require('express');
 const router = express.Router();
-const userController = require('../controller/usario.controller');
+const userController = require('../Controller/usario.controller.js');
 
 
 
