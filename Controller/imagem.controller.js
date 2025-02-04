@@ -56,7 +56,7 @@ app.put('/Imagens/atualizar/:id', async (req, res) => {
 
     const ImagemUpdate = await ImagemsRepositor.update(referencia, titulo);
 
-    if(!usuario){
+    if(!ImagemUpdate){
         return res.status(404).json({ message: 'Imagem não encontrado.' });
     }
 
@@ -77,9 +77,9 @@ app.put('/Imagens/atualizar/:id', async (req, res) => {
 app.delete('/Imagens/deletar/:id', async(req, res) =>{
     try{
         const { id } = req.params; 
-        const Imagem = await ImagemsRepositor.delete(id);
+        const ImagemDelet = await ImagemsRepositor.delete(id);
     
-        if(!Imagem){
+        if(!ImagemDelet){
             return res.status(404).json({ message: 'Usuário não encontrado.' });
         }
         res.status(200).json({message: 'Usuário Deletado'});
