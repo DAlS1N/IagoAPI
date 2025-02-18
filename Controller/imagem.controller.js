@@ -19,7 +19,8 @@ exports.cadastroImagens = async(req, res) =>{
     try{
         const { referencia } = req.body;
         const { titulo } = req.body;
-        const imagemID = await ImagemsRepositor.create(referencia,titulo);
+        const { data_criacao } = req.body;
+        const imagemID = await ImagemsRepositor.create(referencia,titulo,data_criacao);
         res.status(201).json({
             message: 'Imagem inserida com sucesso!',
             imagemID: imagemID
