@@ -1,18 +1,4 @@
-const express = require ('express')
-const axios = require ('axios')
-const app = express();
-const PORT = 8081;
 const ImagemRepositor = require('../Repository/imageRepository.js');
-
-
-const ImagemsRepositor = new ImagemRepositor();
-
-app.listen(PORT, () => {
-    console.log(`Servidor rodando na porta ${PORT}`);
-});
-
-app.use(express.json()); // Middleware para aceitar JSON
-
 
 
 exports.cadastroImagens = async(req, res) =>{
@@ -20,7 +6,7 @@ exports.cadastroImagens = async(req, res) =>{
         const { referencia } = req.body;
         const { titulo } = req.body;
         const { data_criacao } = req.body;
-        const imagemID = await ImagemsRepositor.create(referencia,titulo,data_criacao);
+        const imagemID = await ImagemRepositor.create(referencia,titulo,data_criacao);
         res.status(201).json({
             message: 'Imagem inserida com sucesso!',
             imagemID: imagemID
@@ -35,7 +21,7 @@ exports.cadastroImagens = async(req, res) =>{
 exports.encontrarImagem = async(req, res) =>{
     try{
         const { id } = req.params;
-        const imagem = await ImagemsRepositor.findById(id);
+        const imagem = await ImagemRepositor.findById(id);
 
         if(!imagem){
             return res.status(404).json({ message: 'imagem não encontrada.' });
@@ -55,7 +41,7 @@ exports.atulizarImagem = async (req, res) => {
     const { id } = req.params;
     const { referencia, titulo } = req.body;
 
-    const ImagemUpdate = await ImagemsRepositor.update(referencia, titulo);
+    const ImagemUpdate = await ImagemRepositor.update(referencia, titulo);
 
     if(!ImagemUpdate){
         return res.status(404).json({ message: 'Imagem não encontrado.' });
@@ -78,7 +64,7 @@ exports.atulizarImagem = async (req, res) => {
 exports.deletarImagem = async(req, res) =>{
     try{
         const { id } = req.params; 
-        const ImagemDelet = await ImagemsRepositor.delete(id);
+        const ImagemDelet = await ImagemRepositor.delete(id);
     
         if(!ImagemDelet){
             return res.status(404).json({ message: 'Usuário não encontrado.' });
