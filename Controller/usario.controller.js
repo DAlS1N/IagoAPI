@@ -1,20 +1,9 @@
-const express = require ('express')
-const axios = require ('axios')
-const app = express();
-const PORT = 3000;
-const UserRepositor = require('../Repository/userRepository.js');
+const UsuarioRepository = require('../repository/userRepository.js');
 
-const usuarioRepositor = new UserRepositor();
-
-app.use(express.json()); // Middleware para aceitar JSON
-
-
-
-// Rota para inserir usuário
 exports.cadastroUsuario = async (req, res) => {
     try {
         const { nome } = req.body;
-        const usuarioId = await usuarioRepositor.create(nome);
+        const usuarioId = await UsuarioRepository.create(nome);
         res.status(201).json({
             message: 'Usuário inserido com sucesso!',
             usuarioId: usuarioId
@@ -24,64 +13,42 @@ exports.cadastroUsuario = async (req, res) => {
     }
 };
 
-
-
-// Rota para buscar usuário por ID
 exports.BuscarUsuarioId = async (req, res) => {
-    try{
-    const { id } = req.params; 
-    const usuario = await usuarioRepositor.findById(id);
-
-    if(!usuario){
-        return res.status(404).json({ message: 'Usuário não encontrado.' });
+    try {
+        const { id } = req.params;
+        const usuario = await UsuarioRepository.findById(id);
+        if (!usuario) {
+            return res.status(404).json({ message: 'Usuário não encontrado.' });
+        }
+        res.status(200).json(usuario);
+    } catch (error) {
+        res.status(500).json({ message: 'Erro ao procurar usuário.', error: error.message });
     }
-    res.status(200).json(usuario);
-
-    }catch(error){
-
-        res.status(500).json({message: 'Erro ao procurar usuário.'})
-    }
-    
 };
 
-// Rota para atualizar usuário
 exports.AtualizarUsuario = async (req, res) => {
-
-    try{
+    try {
         const { id } = req.params;
         const { nome } = req.body;
-
-        const usuario = await usuarioRepositor.update(id,nome);
-    
-        if(!usuario){
+        const usuario = await UsuarioRepository.update(id, nome);
+        if (!usuario) {
             return res.status(404).json({ message: 'Usuário não encontrado.' });
         }
-        res.status(200).json({message: 'Usuário Atualizado'});
-    
-        }catch(error){
-    
-            res.status(500).json({message: 'Erro ao atualizar o usuário.'})
-        }
-        
+        res.status(200).json({ message: 'Usuário atualizado com sucesso.' });
+    } catch (error) {
+        res.status(500).json({ message: 'Erro ao atualizar usuário.', error: error.message });
+    }
 };
 
-// Rota para deletar usuário
 exports.DeletarUsuario = async (req, res) => {
-    try{
-        const { id } = req.params; 
-        const usuario = await usuarioRepositor.delete(id);
-    
-        if(!usuario){
+    try {
+        const { id } = req.params;
+        const usuario = await UsuarioRepository.delete(id);
+        if (!usuario) {
             return res.status(404).json({ message: 'Usuário não encontrado.' });
         }
-        res.status(200).json({message: 'Usuário Deletado'});
-    
-        }catch(error){
-    
-            res.status(500).json({message: 'Erro ao deletar o usuário.'})
-        }
+        res.status(200).json({ message: 'Usuário deletado com sucesso.' });
+    } catch (error) {
+        res.status(500).json({ message: 'Erro ao deletar usuário.', error: error.message });
+    }
 };
-
-app.listen(PORT, () => {
-    console.log(`Servidor rodando na porta ${PORT}`);
-});
