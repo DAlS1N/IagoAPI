@@ -1,9 +1,9 @@
 const db = require('../Repository/db');
 
 class ImageRepository {
-    static async create(referencia, titulo) {
-        const query = 'INSERT INTO imagens (referencia, titulo, data_criacao) VALUES (?, CURDATE())';
-        const [result] = await db.query(query, [referencia, titulo]);
+    static async create(referencia, titulo, data_criacao) {
+        const query = 'INSERT INTO imagens (referencia, titulo, data_criacao) VALUES (?, ?, ?)';
+        const [result] = await db.query(query, [referencia, titulo, data_criacao]);
         return result.insertId;
     }
 
@@ -13,9 +13,9 @@ class ImageRepository {
         return rows[0];
     }
 
-    static async update(id, nome) {
-        const query = 'UPDATE imagens SET titulo = ? WHERE id = ?';
-        const [result] = await db.query(query, [nome, id]);
+    static async update(id, referencia, titulo) {
+        const query = 'UPDATE imagens SET referencia = ?, titulo = ? WHERE id = ?';
+        const [result] = await db.query(query, [referencia, titulo, id]);
         return result.affectedRows > 0;
     }
 
