@@ -1,9 +1,10 @@
 const AWS = require('aws-sdk');
+require('dotenv').config(); // Carrega as variáveis de ambiente
 
 AWS.config.update({
-  region: 'us-east-1', 
-  accessKeyId: 'B328mo5Ry6IdLvxxgXeeHAElPfR8U/wx/b3lbljs',
-  secretAccessKey: 'AKIA5RRHCKYZSZDVDH77'
+  region: process.env.AWS_REGION, // Usa a variável de ambiente
+  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
 });
 
 const s3 = new AWS.S3();

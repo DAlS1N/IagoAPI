@@ -1,49 +1,49 @@
 const s3 = require('../Repository/awsConfig');
-const fs = require('fs');
-const { v4: uuidv4 } = require('uuid');
+const multer = require('multer');
 
-// Função para fazer o upload de um arquivo
-const uploadFile = (filePath, bucketName, keyName = uuidv4()) => {
-  const fileContent = fs.readFileSync(filePath);
+const storage = multer.memoryStorage(); // Armazena em memória antes de enviar para o S3
 
-  const params = {
-    Bucket: bucketName,
-    Key: keyName,
-    Body: fileContent
-  };
+const upload = multer({ storage: storage });
+exports.uploadFile = async (req, res) => {
+    try {
+        if (!req.file) {
+            return res.status(400).json({ message: 'Nenhum arquivo enviado.' });
+        }
 
-  return new Promise((resolve, reject) => {
-    s3.upload(params, (err, data) => {
-      if (err) {
-        console.error('Erro ao fazer o upload:', err);
-        reject(err);
-      } else {
-        console.log('Arquivo carregado com sucesso:', data.Location);
-        resolve(data.Location);
-      }
-    });
-  });
+        const fileKey = `uploads/${Date.now()}_${req.file.originalname}`;
+
+        const params = {
+            Bucket: 'bucketmi75', // Nome do bucket fixo
+            Key: fileKey,
+            Body: req.file.buffer,
+            ContentType: req.file.mimetype
+        };
+
+        s3.upload(params, (err, data) => {
+            if (err) {
+                return res.status(500).json({ message: 'Erro ao fazer upload', error: err.message });
+            }
+            res.status(200).json({ message: 'Upload realizado com sucesso', url: data.Location, key: fileKey });
+        });
+
+    } catch (error) {
+        res.status(500).json({ message: 'Erro interno', error: error.message });
+    }
 };
 
-// Função para baixar um arquivo do S3
-const downloadFile = (bucketName, keyName, downloadPath) => {
-  const params = {
-    Bucket: bucketName,
-    Key: keyName
-  };
+exports.downloadFile = async (req, res) => {
+    try {
+        const { key } = req.params;
 
-  const file = fs.createWriteStream(downloadPath);
+        const params = {
+            Bucket: 'bucketmi75',
+            Key: key
+        };
 
-  return new Promise((resolve, reject) => {
-    s3.getObject(params)
-      .createReadStream()
-      .on('error', reject)
-      .pipe(file)
-      .on('close', () => {
-        console.log('Arquivo baixado com sucesso:', downloadPath);
-        resolve(downloadPath);
-      });
-  });
+        const fileStream = s3.getObject(params).createReadStream();
+        res.attachment(key);
+        fileStream.pipe(res);
+    } catch (error) {
+        res.status(500).json({ message: 'Erro ao baixar o arquivo', error: error.message });
+    }
 };
-
-module.exports = { uploadFile, downloadFile };
