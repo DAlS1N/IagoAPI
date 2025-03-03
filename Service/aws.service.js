@@ -5,7 +5,7 @@ exports.uploadFile = async (file) => {
         throw new Error('Nenhum arquivo enviado.');
     }
 
-    const fileKey = `uploads/${Date.now()}_${file.originalname}`;
+    const fileKey = `${Date.now()}_${file.originalname}`;
 
     const params = {
         Bucket: 'bucketmi75',
