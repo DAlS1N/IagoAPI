@@ -1,4 +1,4 @@
-const db = require('../Repository/db');
+const db = require('../config/db');
 
 class ImageRepository {
     static async create(referencia, titulo, data_criacao) {

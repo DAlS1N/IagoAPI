@@ -1,9 +1,9 @@
-const UsuarioRepository = require('../Repository/userRepository.js');
+const UsuarioService = require('../Service/usuario.service');
 
 exports.cadastroUsuario = async (req, res) => {
     try {
         const { nome } = req.body;
-        const usuarioId = await UsuarioRepository.create(nome);
+        const usuarioId = await UsuarioService.cadastroUsuario(nome);
         res.status(201).json({ message: 'Usuário cadastrado com sucesso!', usuarioId });
     } catch (error) {
         res.status(500).json({ message: 'Erro ao inserir usuário.', error: error.message });
@@ -13,7 +13,7 @@ exports.cadastroUsuario = async (req, res) => {
 exports.buscarUsuarioId = async (req, res) => {
     try {
         const { id } = req.params;
-        const usuario = await UsuarioRepository.findById(id);
+        const usuario = await UsuarioService.buscarUsuarioId(id);
         if (!usuario) return res.status(404).json({ message: 'Usuário não encontrado.' });
 
         res.status(200).json(usuario);
@@ -26,8 +26,8 @@ exports.atualizarUsuario = async (req, res) => {
     try {
         const { id } = req.params;
         const { nome } = req.body;
-        const usuario = await UsuarioRepository.update(id, nome);
-        if (!usuario) return res.status(404).json({ message: 'Usuário não encontrado.' });
+        const usuarioAtualizado = await UsuarioService.atualizarUsuario(id, nome);
+        if (!usuarioAtualizado) return res.status(404).json({ message: 'Usuário não encontrado.' });
 
         res.status(200).json({ message: 'Usuário atualizado com sucesso.' });
     } catch (error) {
@@ -38,8 +38,8 @@ exports.atualizarUsuario = async (req, res) => {
 exports.deletarUsuario = async (req, res) => {
     try {
         const { id } = req.params;
-        const usuario = await UsuarioRepository.delete(id);
-        if (!usuario) return res.status(404).json({ message: 'Usuário não encontrado.' });
+        const usuarioDeletado = await UsuarioService.deletarUsuario(id);
+        if (!usuarioDeletado) return res.status(404).json({ message: 'Usuário não encontrado.' });
 
         res.status(200).json({ message: 'Usuário deletado com sucesso.' });
     } catch (error) {
