@@ -1,8 +1,4 @@
 const awsService = require('../Service/aws.service');
-const multer = require('multer');
-
-const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
 
 exports.uploadFile = async (req, res) => {
     try {
