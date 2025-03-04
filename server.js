@@ -1,4 +1,3 @@
-require('dotenv').config();
 const express = require('express');
 const imagemRoutes = require('./Routes/imagens.routes.js');
 const userRoutes = require('./Routes/usuario.Routes.js');

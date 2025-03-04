@@ -25,6 +25,9 @@ exports.uploadFile = async (file) => {
     });
 };
 
+
+
+
 exports.downloadFile = async (key) => {
     if (!key) {
         throw new Error('Chave do arquivo não informada.');

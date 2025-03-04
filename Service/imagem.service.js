@@ -1,4 +1,4 @@
-const ImagemRepository = require('../Repository/imageRepository.js');
+const ImagemRepository = require('../Repository/Image.Repository.js');
 
 exports.cadastroImagens = async (referencia, titulo, data_criacao) => {
     return await ImagemRepository.create(referencia, titulo, data_criacao);

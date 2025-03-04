@@ -1,4 +1,4 @@
-const UsuarioService = require('../Service/usuario.service');
+const UsuarioService = require('../Service/Usuario.Service');
 
 exports.cadastroUsuario = async (req, res) => {
     try {

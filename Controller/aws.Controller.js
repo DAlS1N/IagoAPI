@@ -1,4 +1,4 @@
-const awsService = require('../Service/aws.service');
+const awsService = require('../Service/Aws.Service');
 
 exports.uploadFile = async (req, res) => {
     try {

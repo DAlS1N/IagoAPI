@@ -1,4 +1,4 @@
-const ImagemService = require('../Service/imagem.service');
+const ImagemService = require('../Service/Imagem.Service');
 
 exports.cadastroImagens = async (req, res) => {
     try {

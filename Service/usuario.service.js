@@ -1,4 +1,4 @@
-const UsuarioRepository = require('../Repository/userRepository.js');
+const UsuarioRepository = require('../Repository/User.Repository.js');
 
 exports.cadastroUsuario = async (nome) => {
     return await UsuarioRepository.create(nome);
