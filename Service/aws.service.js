@@ -8,7 +8,7 @@ exports.uploadFile = async (file) => {
     const fileKey = `${Date.now()}_${file.originalname}`;
 
     const params = {
-        Bucket: 'bucketmi75',
+        Bucket: ' ',
         Key: fileKey,
         Body: file.buffer,
         ContentType: file.mimetype
@@ -34,7 +34,7 @@ exports.downloadFile = async (key) => {
     }
 
     const params = {
-        Bucket: 'bucketmi75',
+        Bucket: ' ',
         Key: key
     };
 
